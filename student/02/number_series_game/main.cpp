@@ -8,7 +8,10 @@ int main()
     std::cin >> numbers;
 
     for ( int counter = 1; counter < numbers + 1; ++counter )
-        std::cout << counter << std::endl;
-
+        if ( counter % 3 == 0) {
+            std::cout << "zip" << std::endl;
+        } else {
+            std::cout << counter << std::endl;
+        }
     return 0;
 }
