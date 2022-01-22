@@ -39,7 +39,7 @@ int main()
         return EXIT_FAILURE;
     }
 
-    std::cout << encryption(key, text) << std::endl;
+    std::cout << "Encrypted text: " <<encryption(key, text) << std::endl;
 
     return EXIT_SUCCESS;
 
