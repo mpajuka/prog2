@@ -14,6 +14,7 @@ bool check_alphabet(const std::string &key);
 bool check_lower_case(const std::string &key);
 bool check_length(const std::string &key);
 
+std::string encryption(const std::string &key, std::string text);
 
 
 int main()
@@ -26,6 +27,9 @@ int main()
     std::cout << "Enter the encryption key: ";
     std::getline(std::cin, key);
 
+    std::cout << "Enter the text to be encrypted: ";
+    std::getline(std::cin, text);
+
     // testaa avain
 
     if(!check_length(key) or
@@ -35,7 +39,11 @@ int main()
         return EXIT_FAILURE;
     }
 
+    std::cout << encryption(key, text) << std::endl;
+
     return EXIT_SUCCESS;
+
+
 }
 
 bool check_alphabet(const std::string &key) {
@@ -63,4 +71,17 @@ bool check_length(const std::string &key) {
         return false;
     }
     return true;
+}
+
+std::string encryption(const std::string &key, std::string text) {
+    for(uint i = 0; i < text.length(); i++)
+    {
+        char c_in_text = text.at(i);
+        // eka kirjain c = 99
+        // kirjaimen indeksi avaimessa
+        // kirjaimen_ASCII - 97
+
+        text.at(i) = key.at(c_in_text - ASCII_MIN);
+    }
+    return text;
 }
