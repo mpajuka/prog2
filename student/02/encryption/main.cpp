@@ -39,6 +39,10 @@ int main()
         std::cout << "Enter the text to be encrypted: ";
         std::getline(std::cin, text);
 
+        if(!check_lower_case(text)) {
+            return EXIT_FAILURE;
+        }
+
         std::cout << "Encrypted text: " <<encryption(key, text) << std::endl;
         return EXIT_SUCCESS;
 
