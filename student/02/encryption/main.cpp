@@ -8,7 +8,7 @@ const int KEY_LENGTH = 26;
 
 const std::string ERROR_ALPHABET = "Error! The encryption key must contain all alphabets a-z.";
 const std::string ERROR_CASE = "Error! The encryption key must contain only lower case characters.";
-const std::string ERROR_CASE_TEXT = "Error! the text to be encrypted must contain only lower case characters.";
+const std::string ERROR_CASE_TEXT = "Error! The text to be encrypted must contain only lower case characters.";
 const std::string ERROR_LENGTH = "Error! The encryption key must contain 26 characters.";
 
 bool check_alphabet(const std::string &key);
