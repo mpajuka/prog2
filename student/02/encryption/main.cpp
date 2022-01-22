@@ -8,10 +8,12 @@ const int KEY_LENGTH = 26;
 
 const std::string ERROR_ALPHABET = "Error! The encryption key must contain all alphabets a-z.";
 const std::string ERROR_CASE = "Error! The encryption key must contain only lower case characters.";
+const std::string ERROR_CASE_TEXT = "Error! the text to be encrypted must contain only lower case characters.";
 const std::string ERROR_LENGTH = "Error! The encryption key must contain 26 characters.";
 
 bool check_alphabet(const std::string &key);
 bool check_lower_case(const std::string &key);
+bool check_lower_case_text(const std::string &key);
 bool check_length(const std::string &key);
 
 std::string encryption(const std::string &key, std::string text);
@@ -39,7 +41,7 @@ int main()
         std::cout << "Enter the text to be encrypted: ";
         std::getline(std::cin, text);
 
-        if(!check_lower_case(text)) {
+        if(!check_lower_case_text(text)) {
             return EXIT_FAILURE;
         }
 
@@ -64,6 +66,16 @@ bool check_lower_case(const std::string &key) {
         char c = key.at(i);
         if(c < ASCII_MIN or c > ASCII_MAX) {
             std::cout << ERROR_CASE << std::endl;
+            return false;
+        }
+    }
+    return true;
+}
+bool check_lower_case_text(const std::string &key) {
+    for(uint i = 0; i < key.length(); i++) {
+        char c = key.at(i);
+        if(c < ASCII_MIN or c > ASCII_MAX) {
+            std::cout << ERROR_CASE_TEXT << std::endl;
             return false;
         }
     }
