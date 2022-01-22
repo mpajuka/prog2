@@ -4,9 +4,11 @@ using namespace std;
 
 int main()
 {
+    cout << "Enter a number: ";
     int n;
-    cout << "Enter a number:" << endl;
     cin >> n;
+
+
 
     int cube = n * n * n;
     if ( cube/n/n != n) {
