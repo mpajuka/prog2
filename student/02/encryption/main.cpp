@@ -27,9 +27,6 @@ int main()
     std::cout << "Enter the encryption key: ";
     std::getline(std::cin, key);
 
-    std::cout << "Enter the text to be encrypted: ";
-    std::getline(std::cin, text);
-
     // testaa avain
 
     if(!check_length(key) or
@@ -37,12 +34,15 @@ int main()
        !check_alphabet(key))
     {
         return EXIT_FAILURE;
+
+    } else {
+        std::cout << "Enter the text to be encrypted: ";
+        std::getline(std::cin, text);
+
+        std::cout << "Encrypted text: " <<encryption(key, text) << std::endl;
+        return EXIT_SUCCESS;
+
     }
-
-    std::cout << "Encrypted text: " <<encryption(key, text) << std::endl;
-
-    return EXIT_SUCCESS;
-
 
 }
 
