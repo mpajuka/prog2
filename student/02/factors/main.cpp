@@ -26,6 +26,7 @@ int main()
                 shortest_distance = distance;
                 a = i;
                 b = n;
+
             }
         }
     }
