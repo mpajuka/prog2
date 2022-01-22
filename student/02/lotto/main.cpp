@@ -35,7 +35,7 @@ int main()
         cout << "The maximum number of drawn balls is the total amount of balls." << endl;
         return 0;
     } else {
-        cout << "The probability of guessing all " << drawnball_amount << " is "
+        cout << "The probability of guessing all " << drawnball_amount << " balls correctly is "
              << "1/" << lottery_game(lotteryball_amount, drawnball_amount) << endl;
     }
     return 0;
