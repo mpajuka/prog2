@@ -3,8 +3,12 @@
 
 // Write your swap function here.
 
-int swap(int i, int j) {
+int swap(int& i, int& j) {
+    int viite_i = i;
+    int viite_j = j;
 
+    j = viite_i;
+    i = viite_j;
 }
 
 #ifndef UNIT_TESTING
