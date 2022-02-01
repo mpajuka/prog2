@@ -88,7 +88,7 @@ void clean_screen() {
 }
 
 
-bool is_word_earlier_guessed(string secret, string guessed) {
+bool is_word_already_guessed(string secret, string guessed) {
     // Going through all the characters in secret string.
     for ( string::size_type index = 0; index <= secret.size(); ++index ) {
         // If such a character in secret string is met that is not in
