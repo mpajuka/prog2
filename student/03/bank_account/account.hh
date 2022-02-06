@@ -10,6 +10,11 @@ public:
     Account(const std::string& owner, bool has_credit = false);
 
     // More methods
+    void print() const;
+    void set_credit_limit(int raja);
+    void save_money(int maara);
+    void take_money(int maara);
+    void transfer_to(Account, int maara);
 
 private:
     // Generates IBAN (based on running_number_ below).
@@ -23,6 +28,11 @@ private:
     // no own copies of it for each object of the class.
     static int running_number_;
 
+    std::string owner_;
+    bool has_credit_;
+    std::string iban_;
+    int credit_limit;
+    int saved_money;
     // More attributes/methods
 };
 
