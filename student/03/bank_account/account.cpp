@@ -39,6 +39,7 @@ void Account::print() const
               << iban_
               << " : "
               << saved_money
+              << " euros"
               << std::endl;
 }
 
