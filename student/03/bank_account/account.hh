@@ -14,7 +14,8 @@ public:
     void set_credit_limit(int raja);
     void save_money(int maara);
     void take_money(int maara);
-    void transfer_to(Account, int maara);
+    void transfer_to(Account &receiver, int maara);
+    bool check_account(int maara);
 
 private:
     // Generates IBAN (based on running_number_ below).
@@ -32,7 +33,8 @@ private:
     bool has_credit_;
     std::string iban_;
     int credit_limit;
-    int saved_money;
+    int saved_money = 0;
+    std::string receiver;
     // More attributes/methods
 };
 

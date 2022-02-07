@@ -3,7 +3,8 @@
 #include <string>
 
 Account::Account(const std::string& owner, bool has_credit):
-    owner_(owner), has_credit_(has_credit)
+    owner_(owner),
+    has_credit_(has_credit)
 {
     generate_iban();
 }
@@ -33,29 +34,36 @@ void Account::generate_iban()
 
 void Account::print() const
 {
-    std::cout << owner_ << " : " << iban_ << " : " << saved_money << std::endl;
+    std::cout << owner_
+              << " : "
+              << iban_
+              << " : "
+              << saved_money
+              << std::endl;
 }
 
 void Account::set_credit_limit(int raja)
 {
-    if (has_credit_) {
+    if (has_credit_)
+    {
         credit_limit = raja;
-    } else {
+    }
+    else
+    {
+        credit_limit = 0;
         std::cout << "Cannot set credit limit: the account has no credit card" << std::endl;
     }
-
 }
 
 void Account::save_money(int maara)
 {
-    saved_money = maara;
+    saved_money += maara;
 }
 
 void Account::take_money(int maara)
 {
-    if ( maara > saved_money && not has_credit_ ) {
-        std::cout << "Cannot take money: balance underflow" << std::endl;
-    } else {
+    if (check_account(maara))
+    {
         saved_money -= maara;
         std::cout << maara
                   << " euros taken: new balance of "
@@ -67,7 +75,44 @@ void Account::take_money(int maara)
     }
 }
 
-void Account::transfer_to(Account, int maara)
+void Account::transfer_to(Account &receiver, int maara)
 {
-
+    if (check_account(maara))
+    {
+        saved_money -= maara;
+        receiver.save_money(maara);
+        std::cout << maara
+                  << " euros taken: new balance of "
+                  << iban_
+                  << " is "
+                  << saved_money
+                  << " euros"
+                  << std::endl;
+        return;
+    }
+    std::cout << "Transfer from "
+              << iban_
+              << " failed"
+              << std::endl;
 }
+
+bool Account::check_account(int maara)
+{
+    int new_balance = saved_money - maara;
+    if (new_balance < 0)
+    {
+        if (not has_credit_)
+        {
+            std::cout << "Cannot take money: balance underflow" << std::endl;
+            return false;
+        }
+        if (new_balance + credit_limit < 0)
+        {
+            std::cout << "Cannot take money: credit limit overflow" << std::endl;
+            return false;
+        }
+    }
+    return true;
+}
+
+
