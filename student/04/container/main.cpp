@@ -17,22 +17,61 @@ void read_integers(std::vector< int >& ints, int count)
 // TODO: Implement your solution here
 bool same_values(std::vector<int> integers)
 {
-
+    int first_number = integers.at(0);
+    for (int number : integers)
+    {
+        if (number != first_number)
+        {
+             return false;
+        }
+    }
+    return true;
 }
 
 bool is_ordered_non_strict_ascending(std::vector<int> integers)
 {
-
+    int previous_number = integers.at(0);
+    for (int new_number : integers)
+    {
+        if (new_number < previous_number)
+        {
+            return false;
+        }
+        previous_number = new_number;
+    }
+    return true;
 }
 
 bool is_arithmetic_series(std::vector<int> integers)
 {
+    int difference = integers.at(1) - integers.at(0);
+    int previous_number = integers.at(0);
 
+    for (int number : integers)
+    {
+        if (number != previous_number and number - previous_number != difference)
+        {
+            return false;
+        }
+        previous_number = number;
+    }
+    return true;
 }
 
 bool is_geometric_series(std::vector<int> integers)
 {
+    int difference = integers.at(1) / integers.at(0);
+    int previous_number = integers.at(0);
 
+    for (int number : integers)
+    {
+        if (number != previous_number and number / previous_number != difference)
+        {
+            return false;
+        }
+        previous_number = number;
+    }
+    return true;
 }
 
 int main()
