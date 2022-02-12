@@ -5,7 +5,30 @@
 
 // TODO: Implement split function here
 // Do not change main function
+std::vector<std::string> split(const std::string& line, const char separator, bool no_separator=false)
+{
+    std::vector<std::string> full_text;
+    std::string consecutive_chars;
 
+    for (const char i : line)
+    {
+        if (i == separator)
+        {
+            if (consecutive_chars.empty() and no_separator)
+            {
+                continue;
+            }
+            full_text.push_back(consecutive_chars);
+            consecutive_chars = "";
+        }
+        else
+        {
+            consecutive_chars += i;
+        }
+    }
+    full_text.push_back(consecutive_chars);
+    return full_text;
+}
 
 int main()
 {
