@@ -62,13 +62,13 @@ bool is_geometric_series(std::vector<int> integers)
 {
     int difference = integers.at(1) / integers.at(0);
     int previous_number = integers.at(0);
+    if (difference == 0)
+    {
+        return false;
+    }
 
     for (int number : integers)
     {
-        if (difference == 0)
-        {
-            return false;
-        }
         if (number != previous_number and number / previous_number != difference)
         {
             return false;
