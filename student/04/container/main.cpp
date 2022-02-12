@@ -60,12 +60,13 @@ bool is_arithmetic_series(std::vector<int> integers)
 
 bool is_geometric_series(std::vector<int> integers)
 {
-    int difference = integers.at(1) / integers.at(0);
-    int previous_number = integers.at(0);
-    if (difference == 0)
+    if (integers.at(0) == 0 and same_values(integers))
     {
         return false;
     }
+
+    int difference = integers.at(1) / integers.at(0);
+    int previous_number = integers.at(0);
 
     for (int number : integers)
     {
@@ -108,5 +109,5 @@ int main()
     else
         std::cout << "The integers do not form a geometric series" << std::endl;
 
-    return EXIT_SUCCESS;
+    return 0;
 }
