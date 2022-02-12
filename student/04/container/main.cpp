@@ -4,17 +4,36 @@
 
 
 void read_integers(std::vector< int >& ints, int count)
-{
+{    
     int new_integer = 0;
     for(int i = 0; i < count; ++i)
     {
         std::cin >> new_integer;
         // TODO: Implement your solution here
+        ints.push_back(new_integer);
     }
 }
 
 // TODO: Implement your solution here
+bool same_values(std::vector<int> integers)
+{
 
+}
+
+bool is_ordered_non_strict_ascending(std::vector<int> integers)
+{
+
+}
+
+bool is_arithmetic_series(std::vector<int> integers)
+{
+
+}
+
+bool is_geometric_series(std::vector<int> integers)
+{
+
+}
 
 int main()
 {
