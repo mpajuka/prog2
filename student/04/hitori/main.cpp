@@ -74,6 +74,47 @@ void print(const /*vector of vectors or a compatible type*/vector<vector<int>>& 
     cout << "=================" << endl;
 }
 
+vector<vector<int>> start_game(vector<vector<int>>& gameboard)
+{
+
+    while (true)
+    {
+        string check_input;
+        cout << "Enter removable element (x, y): ";
+        vector<int> coordinates;
+
+        for (int i = 0; i < 2; i++)
+        {
+            cin >> check_input;
+            if (check_input == "q" or check_input == "Q")
+            {
+                cout << "Quitting" << endl;
+                return gameboard;
+            }
+
+            int num = stoi_with_check(check_input);
+            coordinates.push_back(num);
+        }
+
+        unsigned int x = coordinates.at(0);
+        unsigned int y = coordinates.at(1);
+
+        if (x < 1 or y < 1 or x > 5 or y > 5)
+        {
+            cout << "Out of board" << endl;
+            continue;
+        }
+        if (gameboard.at(y-1).at(x-1) == 0)
+        {
+            cout << "Already removed" << endl;
+            continue;
+        }
+        gameboard.at(y-1).at(x-1) = 0;
+
+        print(gameboard);
+    }
+    return gameboard;
+}
 
 vector<vector<int>> create_random_board(vector<vector<int>>& gameboard)
 {
@@ -136,6 +177,7 @@ int main()
             vector<vector<int>> gameboard;
             create_random_board(gameboard);
             print(gameboard);
+            start_game(gameboard);
             break;
         }
         if (choice == "i" or choice == "I")
@@ -143,6 +185,7 @@ int main()
             vector<vector<int>> gameboard;
             create_input_board(gameboard);
             print(gameboard);
+            start_game(gameboard);
             break;
         }
     }
