@@ -1,5 +1,18 @@
+/*  Hitori
+ *  --------------------
+ *  Kuvaus:
+ *  --------------------
+ *  Ohjelman kirjoittaja
+ *  --------------------
+ *  Nimi: Miska Pajukangas
+ *  Opiskelijanumero: 150281685
+ *  Käyttäjätunnus: bxmipa
+ *  E-Mail: miska.pajukangas@tuni.fi
+ */
+
 #include <iostream>
 #include <vector>
+#include <random>
 
 using namespace std;
 
@@ -37,7 +50,7 @@ unsigned int stoi_with_check(const string& str)
 // Tulostaa pelilaudan rivi- ja sarakenumeroineen.
 //
 // Prints the game board with row and column numbers.
-void print(const /*vector of vectors or a compatible type*/& gameboard)
+void print(const /*vector of vectors or a compatible type*/vector<vector<int>>& gameboard)
 {
     cout << "=================" << endl;
     cout << "|   | 1 2 3 4 5 |" << endl;
@@ -61,7 +74,77 @@ void print(const /*vector of vectors or a compatible type*/& gameboard)
     cout << "=================" << endl;
 }
 
+
+vector<vector<int>> create_random_board(vector<vector<int>>& gameboard)
+{
+    int seed = 0;
+    cout << "Enter seed value: ";
+    cin >> seed;
+    default_random_engine gen(seed);
+    uniform_int_distribution<int> distr(1, 5);
+
+
+    for (unsigned int i = 0; i < BOARD_SIDE; i++)
+    {
+        vector<int> v1;
+        for (unsigned int j = 0; j < BOARD_SIDE; j++)
+        {
+            v1.push_back(distr(gen));
+        }
+        gameboard.push_back(v1);
+    }
+    return gameboard;
+}
+
+vector<vector<int>> create_input_board(vector<vector<int>>& gameboard)
+{
+    cout << "Input: ";
+    vector<int> input_numbers;
+    int new_int = 0;
+
+    for (int i = 0; i < 25; i++)
+    {
+        cin >> new_int;
+        input_numbers.push_back(new_int);
+    }
+
+    int int_count = 0;
+
+    for (unsigned int i = 0; i < BOARD_SIDE; i++) {
+        vector<int> v1;
+        for (unsigned int j = 0; j < BOARD_SIDE; j++) {
+            v1.push_back(input_numbers[int_count]);
+            int_count++;
+        }
+        gameboard.push_back(v1);
+    }
+    return gameboard;
+}
+
+
 int main()
 {
+    string choice = "";
+    while (true)
+    {
+
+        cout << "Select start (R for random, I for input): ";
+        cin >> choice;
+
+        if (choice == "r" or choice == "R")
+        {
+            vector<vector<int>> gameboard;
+            create_random_board(gameboard);
+            print(gameboard);
+            break;
+        }
+        if (choice == "i" or choice == "I")
+        {
+            vector<vector<int>> gameboard;
+            create_input_board(gameboard);
+            print(gameboard);
+            break;
+        }
+    }
     return 0;
 }
