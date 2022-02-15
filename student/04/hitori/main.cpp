@@ -109,6 +109,70 @@ bool check_surrounding_numbers(vector<vector<int>>& gameboard)
             }
         }
     }
+
+    if ((gameboard.at(0).at(0) != 0 and gameboard.at(0).at(1) == 0 and gameboard.at(1).at(0) == 0)
+        or (gameboard.at(4).at(0) != 0 and gameboard.at(3).at(0) == 0 and gameboard.at(4).at(1) == 0)
+        or (gameboard.at(0).at(4) != 0 and gameboard.at(0).at(3) == 0 and gameboard.at(1).at(4) == 0)
+        or (gameboard.at(4).at(4) != 0 and gameboard.at(3).at(4) == 0 and gameboard.at(4).at(3) == 0))
+    {
+        return true;
+    }
+
+    for (unsigned int i = 1; i < BOARD_SIDE - 1; i++)
+    {
+        for (unsigned int j = 1; j < BOARD_SIDE - 1; j++)
+        {
+            if (gameboard.at(0).at(i) != 0)
+            {
+                if (gameboard.at(0).at(i - 1) == 0
+                    and gameboard.at(0).at(i + 1) == 0
+                    and gameboard.at(1).at(i) == 0)
+                {
+                    return true;
+                }
+                if (gameboard.at(4).at(i - 1) == 0
+                    and gameboard.at(4).at(i + 1) == 0
+                    and gameboard.at(3).at(i) == 0)
+                {
+                    return true;
+                }
+            }
+            if (gameboard.at(i).at(0) != 0)
+            {
+                if (gameboard.at(i - 1).at(0) == 0
+                    and gameboard.at(i + 1).at(0) == 0
+                    and gameboard.at(i).at(1) == 0)
+                {
+                    return true;
+                }
+                if (gameboard.at(i - 1).at(4) == 0
+                    and gameboard.at(i + 1).at(4) == 0
+                    and gameboard.at(i).at(3) == 0)
+                {
+                    return true;
+                }
+            }
+            if (gameboard.at(i).at(4) != 0)
+            {
+                if (gameboard.at(i - 1).at(4) == 0
+                    and gameboard.at(i + 1).at(4) == 0
+                    and gameboard.at(i).at(3) == 0)
+                {
+                    return true;
+                }
+            }
+            if (gameboard.at(i).at(j) != 0)
+            {
+                if (gameboard.at(i - 1).at(j) == 0
+                    and gameboard.at(i).at(j - 1) == 0
+                    and gameboard.at(i + 1).at(j) == 0
+                    and gameboard.at(i).at(j + 1) == 0)
+                {
+                    return true;
+                }
+            }
+        }
+    }
     return false;
 }
 
