@@ -76,8 +76,40 @@ void print(const /*vector of vectors or a compatible type*/vector<vector<int>>& 
 
 bool check_surrounding_numbers(vector<vector<int>>& gameboard)
 {
-    //for (unsigned int i = 1; i < BOARD_SIDE; i++)
-        //if ()
+    for (unsigned int i = 0; i < BOARD_SIDE - 1; i++)
+    {
+        for (unsigned int j = 0; j < BOARD_SIDE - 1; j++)
+        {
+            // Checks if the player has deleted a number next to
+            // an already deleted one,
+            if (gameboard.at(i).at(j) == 0)
+            {
+                if (gameboard.at(i + 1).at(j) == 0
+                        or gameboard.at(i).at(j + 1) == 0)
+                {
+                    return true;
+                }
+            }
+
+        }
+    }
+    for (unsigned int i = 1; i < BOARD_SIDE; i++)
+    {
+        for (unsigned int j = 1; j < BOARD_SIDE; j++)
+        {
+            // Checks if the player has deleted a number next to
+            // an already deleted one,
+            if (gameboard.at(i).at(j) == 0)
+            {
+                if (gameboard.at(i - 1).at(j) == 0
+                        or gameboard.at(i).at(j - 1) == 0)
+                {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
 }
 
 bool check_duplicate_numbers(vector<vector<int>>& gameboard)
@@ -123,7 +155,6 @@ bool check_duplicate_numbers(vector<vector<int>>& gameboard)
     return false;
 }
 
-
 vector<vector<int>> start_game(vector<vector<int>>& gameboard)
 {
     while (true)
@@ -160,9 +191,12 @@ vector<vector<int>> start_game(vector<vector<int>>& gameboard)
         }
         gameboard.at(y-1).at(x-1) = 0;
         print(gameboard);
-        // check_surrounding_numbers(gameboard);
 
-        check_duplicate_numbers(gameboard);
+        if (check_surrounding_numbers(gameboard))
+        {
+            cout << "You lost" << endl;
+            return gameboard;
+        }
 
         if (not check_duplicate_numbers(gameboard))
         {
@@ -172,7 +206,6 @@ vector<vector<int>> start_game(vector<vector<int>>& gameboard)
     }
     return gameboard;
 }
-
 
 vector<vector<int>> create_random_board(vector<vector<int>>& gameboard)
 {
