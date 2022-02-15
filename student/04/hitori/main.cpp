@@ -1,13 +1,31 @@
 /*  Hitori
- *  --------------------
- *  Kuvaus:
- *  --------------------
- *  Ohjelman kirjoittaja
- *  --------------------
- *  Nimi: Miska Pajukangas
- *  Opiskelijanumero: 150281685
- *  Käyttäjätunnus: bxmipa
+ *  ----------------------
+ *  Description:
+ *  ----------------------
+ *  A game of Hitori on a 5x5 board with each square
+ *  containing a value between 1 and 5
+ *
+ *  The game starts with asking the user between a random and an input based
+ *  board, with the first option containing randomly generated numbers
+ *  depending on a seed value, or secondly with 25 user chosen numbers.
+ *
+ *  Numbers can be removed from the board using x and y-coordinates, which
+ *  the user is prompted to input each round.
+ *
+ *  The purpose of the game is to remove numbers from the board
+ *  so that no column or row has any duplicate numbers, resulting in victory
+ *
+ *  If on the other hand the player removes numbers so that any number
+ *  does not have direct adjacent numbers, the game results in a loss
+ *  ----------------------
+ *  Program author
+ *  ----------------------
+ *  Name: Miska Pajukangas
+ *  Student number: 150281685
+ *  UserID: bxmipa
  *  E-Mail: miska.pajukangas@tuni.fi
+ *  ----------------------
+ *
  */
 
 #include <iostream>
@@ -74,6 +92,15 @@ void print(const /*vector of vectors or a compatible type*/vector<vector<int>>& 
     cout << "=================" << endl;
 }
 
+/**
+ * Check for removed numbers that result in a loss.
+ *
+ * Checks if a variable in the board doesn't have any
+ * direct adjacent values.
+ *
+ * @param gameboard, the Hitori board
+ * @return boolean, depending on the state of the board
+ */
 bool check_surrounding_numbers(vector<vector<int>>& gameboard)
 {
     // Checks if the player has deleted a number adjacent
@@ -188,6 +215,16 @@ bool check_surrounding_numbers(vector<vector<int>>& gameboard)
     return false;
 }
 
+/**
+ * Checks each row and column for duplicate numbers
+ *
+ * Goes through every value of the board horizontally
+ * and vertically, with variable 'n' going one index
+ * ahead of variable 'j'
+ *
+ * @param gameboard, the Hitori board
+ * @return boolean, depending on the state of the board
+ */
 bool check_duplicate_numbers(vector<vector<int>>& gameboard)
 {
     bool has_duplicate = false;
@@ -234,6 +271,17 @@ bool check_duplicate_numbers(vector<vector<int>>& gameboard)
     return false;
 }
 
+/**
+ * Initializes the game process after the boards have been created
+ *
+ * Reads x and y coordinates from the user, checks the input for
+ * a correct in-range integer value. Calls functions for checking
+ * whether the game has resulted in a win or a loss
+ *
+ * @param gameboard, the Hitori board
+ * @return the vector of vectors, gameboard,
+ *  to the main function if the game has ended
+ */
 vector<vector<int>> start_game(vector<vector<int>>& gameboard)
 {
     while (true)
@@ -298,6 +346,15 @@ vector<vector<int>> start_game(vector<vector<int>>& gameboard)
     return gameboard;
 }
 
+/**
+ * Adds randomly generated numbers to the board
+ *
+ * Generates the numbers based on the library 'randoms's
+ * tools
+ *
+ * @param gameboard, the Hitori board
+ * @return the vector of vectors, gameboard, in an altered state
+ */
 vector<vector<int>> create_random_board(vector<vector<int>>& gameboard)
 {
     int seed = 0;
@@ -319,8 +376,19 @@ vector<vector<int>> create_random_board(vector<vector<int>>& gameboard)
     return gameboard;
 }
 
+/**
+ * Adds user-inputted numbers to the board
+ *
+ * Stores the user's numbers to a vector, then inserting
+ * them to the board
+ *
+ * @param gameboard
+ * @return the vector of vectors, gameboard, in an altered state
+ */
 vector<vector<int>> create_input_board(vector<vector<int>>& gameboard)
 {
+    // Takes users input numbers to a vector
+    // which is later inputted to the board
     cout << "Input: ";
     vector<int> input_numbers;
     int new_int = 0;
@@ -344,13 +412,19 @@ vector<vector<int>> create_input_board(vector<vector<int>>& gameboard)
     return gameboard;
 }
 
-
+/**
+ * Initializes the game and board
+ *
+ * Starts a loop that breaks after a correct choice was inputted
+ *
+ * @return
+ */
 int main()
 {
     string choice = "";
     while (true)
     {
-
+        // Initalizes game, breaks loop with correct input
         cout << "Select start (R for random, I for input): ";
         getline(cin, choice);
         vector<vector<int>> gameboard;
@@ -367,7 +441,6 @@ int main()
         // Selects user-input based game
         if (choice == "i" or choice == "I")
         {
-
             create_input_board(gameboard);
             print(gameboard);
             start_game(gameboard);
