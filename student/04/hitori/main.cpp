@@ -325,7 +325,7 @@ int main()
     {
 
         cout << "Select start (R for random, I for input): ";
-        cin >> choice;
+        getline(cin, choice);
 
         if (choice == "r" or choice == "R")
         {
@@ -342,6 +342,10 @@ int main()
             print(gameboard);
             start_game(gameboard);
             break;
+        }
+        else
+        {
+            continue;
         }
     }
     return 0;
