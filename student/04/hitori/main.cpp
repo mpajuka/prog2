@@ -73,6 +73,44 @@ void print(const /*vector of vectors or a compatible type*/vector<vector<int>>& 
     }
     cout << "=================" << endl;
 }
+bool check_duplicate_numbers(vector<vector<int>>& gameboard)
+{
+    bool has_duplicate = false;
+    // Check for duplicates horizontally,
+    // by checking whether the next number of 'j'
+    // has the same variable
+    for (unsigned int i = 1; i < BOARD_SIDE; i++)
+    {
+        for (unsigned int j = 1; j < BOARD_SIDE; j++)
+        {
+           if (gameboard.at(i).at(j) != 0 and gameboard.at(i).at(j) == gameboard.at(i).at(j - 1))
+                {
+                    has_duplicate = true;
+                }
+
+        }
+    }
+
+    // Check for duplicates vertically in
+    // the same principle as for the one above
+    for (unsigned int i = 1; i < BOARD_SIDE; i++)
+    {
+        for (unsigned int j = 1; j < BOARD_SIDE; j++)
+        {
+            if (gameboard.at(i).at(j) != 0 and gameboard.at(i).at(j) == gameboard.at(i - 1).at(j))
+            {
+                has_duplicate = true;
+            }
+        }
+    }
+
+    if (has_duplicate == true)
+    {
+        return true;
+    }
+    return false;
+}
+
 
 vector<vector<int>> start_game(vector<vector<int>>& gameboard)
 {
@@ -110,11 +148,12 @@ vector<vector<int>> start_game(vector<vector<int>>& gameboard)
             continue;
         }
         gameboard.at(y-1).at(x-1) = 0;
-
         print(gameboard);
+        check_duplicate_numbers(gameboard);
     }
     return gameboard;
 }
+
 
 vector<vector<int>> create_random_board(vector<vector<int>>& gameboard)
 {
