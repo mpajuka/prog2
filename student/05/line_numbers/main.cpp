@@ -17,7 +17,7 @@ int main()
     std::ofstream output(output_file);
     if (not file_object)
     {
-        std::cout << "Error the file " << input_file << " cannot be opened." << std::endl;
+        std::cout << "Error! The file " << input_file << " cannot be opened." << std::endl;
         return EXIT_FAILURE;
     }
     else
@@ -29,7 +29,7 @@ int main()
             output << row_count << " " << line << std::endl;
             row_count++;
         }
-        std::cout << "Success!" << std::endl;
+        file_object.close();
     }
 
     return 0;
