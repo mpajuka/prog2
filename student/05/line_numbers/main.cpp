@@ -15,6 +15,7 @@ int main()
 
     std::ifstream file_object(input_file);
     std::ofstream output(output_file);
+
     if (not file_object)
     {
         std::cout << "Error! The file " << input_file << " cannot be opened." << std::endl;
@@ -30,6 +31,7 @@ int main()
             row_count++;
         }
         file_object.close();
+        output.close();
     }
 
     return 0;
