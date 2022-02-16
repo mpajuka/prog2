@@ -14,7 +14,6 @@ int main()
     getline(std::cin, output_file);
 
     std::ifstream file_object(input_file);
-    std::ofstream output(output_file);
 
     if (not file_object)
     {
@@ -23,8 +22,10 @@ int main()
     }
     else
     {
-        int row_count = 1;
+        std::ofstream output(output_file);
         std::string line;
+        int row_count = 1;
+
         while (getline(file_object, line))
         {
             output << row_count << " " << line << std::endl;
@@ -33,6 +34,5 @@ int main()
         file_object.close();
         output.close();
     }
-
     return 0;
 }
