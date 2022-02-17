@@ -20,7 +20,11 @@ int main()
         }
 
         // TODO: implement your solution here
+        std::vector<char> word_vector(word.length());
+
+
         shuffle(word.begin() + 1, word.end() - 1, generator);
         std::cout << word << std::endl;
     }
+    return 0;
 }
