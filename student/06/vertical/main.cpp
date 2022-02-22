@@ -13,6 +13,15 @@ void print_vertical(unsigned int num)
 
 
     // Add your implementation here
+    if (num < 10)
+    {
+        std::cout << num << "\n";
+    }
+    else
+    {
+        print_vertical(num/10);
+        std::cout << num%10 << "\n";
+    }
 }
 
 // Do not modify rest of the code, or the automated testing won't work.
