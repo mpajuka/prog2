@@ -31,8 +31,9 @@ const std::string INPUT_PROMPT = "Give a name for input file: ",
                 FILE_WRONG_FORMAT = "Error: Invalid format in file",
                 ALL_GAMES_TEXT = "All games in alphabetical order:",
                 WRONG_INPUT = "Error: Invalid input.",
-                ALL_PLAYERS_TEXT = "All players in alphabetical order.";
-
+                GAME_NOT_FOUND = "Error: Game could not be found.",
+                ALL_PLAYERS_TEXT = "All players in alphabetical order.",
+                PLAYER_NOT_FOUND = "Error: Player could not be found.";
 
 
 using GAMES = std::map<std::string, std::map<std::string, int>>;
@@ -75,7 +76,58 @@ void print_games(GAMES const& data)
     }
 }
 
+void game_info(GAMES const& data, std::string value)
+{
+    if (data.find(value) == data.end())
+    {
+        std::cout << GAME_NOT_FOUND << "\n";
+    }
 
+    else {
+        std::cout << "Game "
+                << value
+                << " has these scores and players, listed in ascending order:"
+                << "\n";
+
+        std::map<int, std::set<std::string>> scores;
+        for (auto entry : data)
+        {
+            std::map<std::string, int>& second_map = entry.second;
+
+            if (entry.first == value)
+            {
+                for (auto entry2 : second_map)
+                {
+                    if (scores.find(entry2.second) == scores.end())
+                    {
+                        scores.insert({entry2.second, {}});
+                    }
+                    scores[entry2.second].insert(entry2.first);
+                }
+            }
+        }
+
+        for (std::map<int, std::set<std::string>>::const_iterator
+             it = scores.begin(); it != scores.end(); it++)
+        {
+            std::cout << it->first << " : ";
+            std::set<std::string> player_names = it->second;
+            for (std::set<std::string>::iterator it = player_names.begin();
+                 it != player_names.end(); it++)
+            {
+                std::cout << *it;
+                if ((++it) != player_names.end())
+                {
+                    std::cout << ", ";
+                }
+                else {
+                    std::cout << "\n";
+                }
+                it--;
+            }
+        }
+    }
+}
 
 void all_player_info(GAMES const& data)
 {
@@ -100,7 +152,40 @@ void all_player_info(GAMES const& data)
     }
 }
 
+void single_player_info(GAMES const& data, std::string name)
+{
+    std::set<std::string> game_list;
 
+    for (auto it : data)
+    {
+        std::map<std::string, int>& inner_map = it.second;
+        for (auto it2 : inner_map)
+        {
+            if (it2.first == name and game_list.find(it.first) == game_list.end())
+            {
+                game_list.insert(it.first);
+            }
+        }
+    }
+
+    if (game_list.empty())
+    {
+        std::cout << PLAYER_NOT_FOUND << "\n";
+    }
+    else
+    {
+        std::cout << "Player "
+                  << name
+                  << " plays the following games:"
+                  << "\n";
+
+        for (auto game : game_list)
+        {
+            std::cout << game << "\n";
+        }
+    }
+
+}
 
 bool line_correct(std::vector<std::string> const& parts)
 {
@@ -182,12 +267,33 @@ int main()
         {
             print_games(data);
         }
-
+        else if (user_input == "GAME")
+        {
+            if (parts.size() == 2)
+            {
+                std::string value = parts.at(1);
+                game_info(data, value);
+            }
+            else {
+                std::cout << WRONG_INPUT << "\n";
+            }
+        }
         else if (user_input == "ALL_PLAYERS")
         {
             all_player_info(data);
         }
+        else if (user_input == "PLAYER")
+        {
+            if (parts.size() == 2)
+            {
+                std::string name = parts.at(1);
+                single_player_info(data, name);
+            }
+            else {
+                std::cout << PLAYER_NOT_FOUND << "\n";
+            }
 
+        }
         else {
             std::cout << WRONG_INPUT << "\n";
         }
