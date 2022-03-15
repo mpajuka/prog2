@@ -28,7 +28,11 @@
 
 const std::string INPUT_PROMPT = "Give a name for input file: ",
                 FILE_NOT_READ = "Error: File could not be read",
-                FILE_WRONG_FORMAT = "Error: Invalid format in file";
+                FILE_WRONG_FORMAT = "Error: Invalid format in file",
+                ALL_GAMES_TEXT = "All games in alphabetical order:",
+                WRONG_INPUT = "Error: Invalid input.",
+                ALL_PLAYERS_TEXT = "All players in alphabetical order.";
+
 
 
 using GAMES = std::map<std::string, std::map<std::string, int>>;
@@ -59,6 +63,43 @@ std::vector<std::string> split( const std::string& str, char delim = ';' )
     }
     return result;
 }
+
+// ALL_GAMES
+void print_games(GAMES const& data)
+{
+    std::cout << ALL_GAMES_TEXT << "\n";
+
+    for (auto entry : data)
+    {
+        std::cout << entry.first << "\n";
+    }
+}
+
+
+
+void all_player_info(GAMES const& data)
+{
+    std::cout << ALL_PLAYERS_TEXT << "\n";
+    std::set<std::string> name_list;
+
+    for (auto entry : data)
+    {
+        std::map<std::string, int>& inner_map = entry.second;
+
+        for (auto entry2 : inner_map)
+        {
+            if (name_list.find(entry2.first) == name_list.end())
+            {
+                name_list.insert(entry2.first);
+            }
+        }
+    }
+    for (auto it = name_list.begin(); it != name_list.end(); it++)
+    {
+        std::cout << *it << "\n";
+    }
+}
+
 
 
 bool line_correct(std::vector<std::string> const& parts)
@@ -105,7 +146,6 @@ bool read_input(GAMES& data)
     return true;
 }
 
-
 int main()
 {
     GAMES data;
@@ -113,6 +153,44 @@ int main()
     {
         return EXIT_FAILURE;
     }
+    std::string user_input = "";
+    std::vector<std::string> parts;
 
+    while (true)
+    {
+        std::cout << "games> ";
+        std::getline(std::cin, user_input);
+        if (user_input == "")
+        {
+            continue;
+        }
+        parts = split(user_input, ' ');
+        user_input = parts.at(0);
+
+
+        // Converts string to uppercase by going through each character
+        std::for_each(user_input.begin(), user_input.end(), [](char & c)
+        {
+            c = ::toupper(c);
+        });
+
+        if (user_input == "QUIT")
+        {
+            break;
+        }
+        else if (user_input == "ALL_GAMES")
+        {
+            print_games(data);
+        }
+
+        else if (user_input == "ALL_PLAYERS")
+        {
+            all_player_info(data);
+        }
+
+        else {
+            std::cout << WRONG_INPUT << "\n";
+        }
+    }
     return EXIT_SUCCESS;
 }
