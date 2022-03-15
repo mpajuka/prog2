@@ -254,10 +254,10 @@ int main()
 
 
         // Converts string to uppercase by going through each character
-        std::for_each(user_input.begin(), user_input.end(), [](char & c)
+        for (auto & c : user_input)
         {
-            c = ::toupper(c);
-        });
+            c = std::toupper(c);
+        }
 
         if (user_input == "QUIT")
         {
