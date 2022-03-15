@@ -32,7 +32,7 @@ const std::string INPUT_PROMPT = "Give a name for input file: ",
                 ALL_GAMES_TEXT = "All games in alphabetical order:",
                 WRONG_INPUT = "Error: Invalid input.",
                 GAME_NOT_FOUND = "Error: Game could not be found.",
-                ALL_PLAYERS_TEXT = "All players in alphabetical order.",
+                ALL_PLAYERS_TEXT = "All players in alphabetical order:",
                 PLAYER_NOT_FOUND = "Error: Player could not be found.";
 
 
