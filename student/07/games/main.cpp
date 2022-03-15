@@ -28,7 +28,7 @@
 
 const std::string INPUT_PROMPT = "Give a name for input file: ",
                 FILE_NOT_READ = "Error: File could not be read",
-                FILE_WRONG_FORMAT = "Error: Invalid format in file",
+                FILE_WRONG_FORMAT = "Error: Invalid format in file.",
                 ALL_GAMES_TEXT = "All games in alphabetical order:",
                 WRONG_INPUT = "Error: Invalid input.",
                 GAME_NOT_FOUND = "Error: Game could not be found.",
@@ -176,7 +176,7 @@ void single_player_info(GAMES const& data, std::string name)
     {
         std::cout << "Player "
                   << name
-                  << " plays the following games:"
+                  << " playes the following games:"
                   << "\n";
 
         for (auto game : game_list)
@@ -269,7 +269,7 @@ int main()
         }
         else if (user_input == "GAME")
         {
-            if (parts.size() == 2)
+            if (parts.size() >= 2)
             {
                 std::string value = parts.at(1);
                 game_info(data, value);
