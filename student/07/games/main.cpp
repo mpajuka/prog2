@@ -1,7 +1,5 @@
 /*  COMP.CS.100 Project 2: GAME STATISTICS
  * ===============================
- * EXAMPLE SOLUTION
- * ===============================
  *
  *  Acts as a game statistics with n commands:
  * ALL_GAMES - Prints all known game names
@@ -14,9 +12,21 @@
  * already playes the game
  * REMOVE_PLAYER <player name> - Removes the player from all games
  *
- *  The data file's lines should be in format game_name;player_name;score
- * Otherwise the program execution terminates instantly (but still gracefully).
+ * Program author
+ * ===============================
+ * Name: Miska Pajukanags
+ * Student number: 150281685
+ * UserID: bxmipa
+ * E-Mail: miska.pajukangas@tuni.fi
  *
+ * A program which reads a .txt file in a way as a program would read
+ * a .csv file. Splits the three parts of each line by a delimiter ";"
+ * by 'game', 'player' and 'score'. After the file is read and inserted to the
+ * data structure, the user can then fetch certain information about the data
+ * using certain commands which for example print out all the games or
+ * information about the scores of a game. The commands simply iterate or
+ * insert the data to a data structure which is then printed out for the user
+ * to see
  * */
 #include <iostream>
 #include <string>
@@ -26,6 +36,7 @@
 #include <ctype.h>
 #include <set>
 
+// Prints for the user interface
 const std::string INPUT_PROMPT = "Give a name for input file: ",
                 FILE_NOT_READ = "Error: File could not be read",
                 FILE_WRONG_FORMAT = "Error: Invalid format in file.",
@@ -35,7 +46,7 @@ const std::string INPUT_PROMPT = "Give a name for input file: ",
                 ALL_PLAYERS_TEXT = "All players in alphabetical order:",
                 PLAYER_NOT_FOUND = "Error: Player could not be found.";
 
-
+// The main data structure where values are stored from the text file
 using GAMES = std::map<std::string, std::map<std::string, int>>;
 
 // Casual split func, if delim char is between "'s, ignores it.
@@ -65,17 +76,34 @@ std::vector<std::string> split( const std::string& str, char delim = ';' )
     return result;
 }
 
-// ALL_GAMES
+/**
+ * Prints the names of the games, the "outer" part of the two maps,
+ * or better referred as the keys of the map GAMES
+ *
+ * @brief print_games
+ * @param data, the main data structure declared above with the name GAMES
+ */
 void print_games(GAMES const& data)
 {
     std::cout << ALL_GAMES_TEXT << "\n";
 
     for (auto entry : data)
     {
+        // Game names
         std::cout << entry.first << "\n";
     }
 }
 
+/**
+ * Reads data from GAMES data structure and inserts correct info to scores
+ *
+ * Inserts information about each games player and their scores, inserts
+ * the information to a new map which is read later by iterating through it
+ *
+ * @brief game_info
+ * @param data, the main data structure declared above with the name GAMES
+ * @param value, a user inputted string
+ */
 void game_info(GAMES const& data, std::string value)
 {
     if (data.find(value) == data.end())
@@ -90,8 +118,11 @@ void game_info(GAMES const& data, std::string value)
                 << "\n";
 
         std::map<int, std::set<std::string>> scores;
+        // "Outer" part of the data structure, or the key as a string
         for (auto entry : data)
         {
+            // Inner part of the loop, as to iterate through the map inside the
+            // previous
             std::map<std::string, int>& second_map = entry.second;
 
             if (entry.first == value)
@@ -106,7 +137,7 @@ void game_info(GAMES const& data, std::string value)
                 }
             }
         }
-
+        // Iterates through the map and splits the score number and players
         for (std::map<int, std::set<std::string>>::const_iterator
              it = scores.begin(); it != scores.end(); it++)
         {
@@ -115,6 +146,9 @@ void game_info(GAMES const& data, std::string value)
             for (std::set<std::string>::iterator it = player_names.begin();
                  it != player_names.end(); it++)
             {
+                // iterates through the set inside the map, splits the strings
+                // if the set contains more than one, else it moves to another
+                // line
                 std::cout << *it;
                 if ((++it) != player_names.end())
                 {
@@ -129,15 +163,24 @@ void game_info(GAMES const& data, std::string value)
     }
 }
 
+/**
+ * Reads data with a for loop then places unique names in a set,
+ * and prints the contents by iterating through
+ *
+ * @brief all_player_info
+ * @param data, the main data structure declared above with the name GAMES
+ */
 void all_player_info(GAMES const& data)
 {
     std::cout << ALL_PLAYERS_TEXT << "\n";
     std::set<std::string> name_list;
 
+    // "Outer" part of the data structure, or the key as a string
     for (auto entry : data)
     {
+        // Inner part of the loop, as to iterate through the map inside the
+        // previous
         std::map<std::string, int>& inner_map = entry.second;
-
         for (auto entry2 : inner_map)
         {
             if (name_list.find(entry2.first) == name_list.end())
@@ -146,18 +189,31 @@ void all_player_info(GAMES const& data)
             }
         }
     }
+    // Read and print out the set
     for (auto it = name_list.begin(); it != name_list.end(); it++)
     {
         std::cout << *it << "\n";
     }
 }
 
+/**
+ * Reads through the data structure and adds a game to the set,
+ * if the key has the same name as the users input. Later goes
+ * through the set and prints out the contents
+ *
+ * @brief single_player_info
+ * @param data, the main data structure declared above with the name GAMES
+ * @param name, the user inputted string containing the name of the player
+ */
 void single_player_info(GAMES const& data, std::string name)
 {
     std::set<std::string> game_list;
 
+    // Reads the outer part of the data struct
     for (auto it : data)
     {
+        // Inner part of the loop, as to iterate through the map inside the
+        // previous
         std::map<std::string, int>& inner_map = it.second;
         for (auto it2 : inner_map)
         {
@@ -179,6 +235,7 @@ void single_player_info(GAMES const& data, std::string name)
                   << " playes the following games:"
                   << "\n";
 
+        // Read and print out the set
         for (auto game : game_list)
         {
             std::cout << game << "\n";
@@ -187,12 +244,28 @@ void single_player_info(GAMES const& data, std::string name)
 
 }
 
+/**
+ * Reads the vector with splitted parts, more so checks if the data line
+ * has invalid parts or empty ones
+ *
+ *
+ * @brief line_correct
+ * @param parts, string splitted to game, player and score
+ * @return
+ */
 bool line_correct(std::vector<std::string> const& parts)
 {
    return parts.size() == 3
            and not parts.at(0).empty() and not parts.at(1).empty();
 }
 
+/**
+ * Read the data file, line by line and insert the contents into data structure
+ *
+ * @brief read_input
+ * @param data, the main data structure declared above with the name GAMES
+ * @return
+ */
 bool read_input(GAMES& data)
 {
     std::string file_name;
@@ -231,6 +304,13 @@ bool read_input(GAMES& data)
     return true;
 }
 
+/**
+ * Main function which reads the commands and then moves to
+ * the corresponding function
+ *
+ * @brief main
+ * @return
+ */
 int main()
 {
     GAMES data;
