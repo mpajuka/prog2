@@ -97,17 +97,16 @@ void modify_student_number(Student* id)
     std::getline(std::cin, new_number);
     std::cout << "\n";
 
-    if (not is_valid_phone_number(new_number))
+    if (is_valid_phone_number(new_number))
     {
-        return;
+        id->phone_number = new_number;
     }
 
-    id->phone_number = new_number;
 }
 
-void save_data(std::map<std::string, Student*> const& ids)
+void save_data(std::map<std::string, Student*> const& ids, std::string const& file_name)
 {
-    std::ofstream file("data.txt");
+    std::ofstream file(file_name);
 
     if (not file)
     {
@@ -117,13 +116,13 @@ void save_data(std::map<std::string, Student*> const& ids)
     for(std::pair<std::string, Student*> p : ids)
     {
         Student* student = p.second;
-        std::string line = student->student_number + "; "
-                            +student->user_id + "; "
-                            +student->name + ";"
-                            +student->phone_number + ";"
-                            +student->email + "; "
-                            +student->skype;
-        file << line << "\n";
+        file << student->student_number + ";"
+             << student->user_id + ";"
+             << student->name + ";"
+             << student->phone_number + ";"
+             << student->email + ";"
+             << student->skype << "\n";
+
     }
     file.close();
 }
@@ -185,17 +184,17 @@ int main() {
             if (student_numbers.find(student_number) == student_numbers.end())
             {
                 std::cout << "There is no student with the given number!" << "\n";
+                std::cout << std::endl;
                 continue;
             }
 
             modify_student_number(student_numbers.at(student_number));
-
+            save_data(user_ids, file_name);
 
 
         } else if(command == "Q" or command == "q") {
             // Deleting the data structure: deallocating memory
             // and nullifying pointers
-            save_data(user_ids);
             for(auto pair: student_numbers) {
                 pair.second = nullptr;
             }
