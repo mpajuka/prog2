@@ -92,7 +92,7 @@ bool is_valid_phone_number(const std::string number) {
 
 void modify_student_number(Student* id)
 {
-    std::cout << "Enter the new phone number: ";
+    std::cout << "Enter a new phone number: ";
     std::string new_number;
     std::getline(std::cin, new_number);
     std::cout << "\n";
