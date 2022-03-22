@@ -47,7 +47,7 @@ bool Cards::remove(int &id)
 
 bool Cards::bottom_to_top()
 {
-    if (top_ == nullptr)
+    if (top_ == nullptr || top_->next == nullptr)
     {
         return false;
     }
@@ -69,7 +69,7 @@ bool Cards::bottom_to_top()
 
 bool Cards::top_to_bottom()
 {
-    if (top_ == nullptr)
+    if (top_ == nullptr || top_->next == nullptr)
     {
         return false;
     }
@@ -108,7 +108,7 @@ Cards::~Cards()
 int Cards::recursive_print(Card_data *top, std::ostream &s)
 {
     int i = 1;
-    if (top != nullptr)
+    if (top->next != nullptr)
     {
         i += recursive_print(top->next, s);
     }
