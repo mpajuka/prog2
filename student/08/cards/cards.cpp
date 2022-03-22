@@ -112,7 +112,7 @@ int Cards::recursive_print(Card_data *top, std::ostream &s)
     {
         i += recursive_print(top->next, s);
     }
-    s << i << ": " << top_->data << "\n";
+    s << i << ": " << top->data << std::endl;
     return i;
 
 }
