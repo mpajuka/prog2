@@ -27,7 +27,7 @@ void Cards::print_from_top_to_bottom(std::ostream &s)
     uint i = 1;
     while (current_card != nullptr)
     {
-        s << i << ": " << current_card->data << "\n";
+        s << i++ << ": " << current_card->data << "\n";
         current_card = current_card->next;
     }
 }
