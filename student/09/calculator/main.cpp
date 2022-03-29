@@ -70,7 +70,7 @@ const vector<Command> COMMANDS = {
 std::string str2upper(std::string const& str)
 {
     std::string caps = str;
-    for (int i = 0; i < str.length(); i++)
+    for (std::string::size_type i = 0; i < str.length(); i++)
     {
         caps.at(i) = toupper(str.at(i));
     }
