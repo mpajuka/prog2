@@ -8,5 +8,6 @@ double addition(double left, double right);
 double subtraction(double left, double right);
 double multiplication(double left, double right);
 double division(double left, double right);
+double exponent(double left, double right);
 
 #endif

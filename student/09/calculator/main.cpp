@@ -7,7 +7,11 @@
 
 using namespace std;
 
-const string GREETING_AT_END = "Thanks and see you later!";
+const string GREETING_AT_END = "Thanks and see you later!",
+             PARAM_ERROR = "Error: wrong number of parameters.",
+             NON_NUMBER_ERROR = "Error: a non-number operand.",
+             UNKNOWN_COMMAND = "Error: unknown command.",
+             EXIT_MESSAGE = "Thanks and see you later!";
 
 // Utility function to sections a string at delimiters
 vector< string > split(const string& s,
@@ -54,13 +58,24 @@ const vector<Command> COMMANDS = {
     {"DECREASE", 2, false, subtraction},
     {"MULTIPLY", 2, false, multiplication},
     {"DIVIDE", 2, false, division},
+    {"^", 2, false, exponent},
+    {"POWER", 2, false, exponent},
+    {"EXP", 2, false, exponent},
     {"STOP", 0, true, nullptr},
     {"QUIT", 0, true, nullptr},
     {"EXIT", 0, true, nullptr},
     {"Q", 0, true, nullptr}
 };
 
-
+std::string str2upper(std::string const& str)
+{
+    std::string caps = str;
+    for (int i = 0; i < str.length(); i++)
+    {
+        caps.at(i) = toupper(str.at(i));
+    }
+    return caps;
+}
 int main() {
 
     // Using precision of two decimals in printing
@@ -88,7 +103,45 @@ int main() {
         string command_to_be_executed = pieces.at(0);
 
         // TODO: Implement command execution here!
+        std::vector<Command>::const_iterator commands_iter = COMMANDS.begin();
+        bool command_found = false;
 
+        while (commands_iter != COMMANDS.end())
+        {
+            std::string command_name = commands_iter->str;
+            if (str2upper(command_to_be_executed) == command_name)
+            {
+                command_found = true;
+
+
+                if (pieces.size() - 1 != commands_iter->parameter_number)
+                {
+                    std::cout << PARAM_ERROR << "\n";
+                    break;
+                }
+
+                if (commands_iter->is_exit)
+                {
+                    std::cout << EXIT_MESSAGE << "\n";
+                    return EXIT_SUCCESS;
+                }
+
+                double param1, param2;
+                if (!string_to_double(pieces.at(1), param1) ||
+                    !string_to_double(pieces.at(2), param2))
+                {
+                    std::cout << NON_NUMBER_ERROR << "\n";
+                    break;
+                }
+                std::cout << commands_iter->action(param1, param2) << "\n";
+            }
+            commands_iter++;
+        }
+
+        if (!command_found)
+        {
+            std::cout << UNKNOWN_COMMAND << "\n";
+        }
     }
 }
 
