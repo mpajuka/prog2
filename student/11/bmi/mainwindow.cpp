@@ -42,6 +42,14 @@ void MainWindow::result()
                 ui->infoTextBrowser->setText("You are overweight.");
             }
         }
+        else {
+            ui->resultLabel->setText("Cannot count");
+            ui->infoTextBrowser->clear();
+        }
+    }
+    else {
+        ui->resultLabel->setText("Cannot count");
+        ui->infoTextBrowser->clear();
     }
 }
 
