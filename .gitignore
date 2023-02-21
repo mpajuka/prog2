@@ -1,3 +1,11 @@
-*.pro.user
-build*
-*.DS_Store
+*
+!.md
+!*/
+!.gitignore
+!.md
+!.gitattributes
+!student/**/*.cpp
+!student/**/*.hh
+!student/**/*.pro
+!student/**/*.md
+!student/**/*.txt
