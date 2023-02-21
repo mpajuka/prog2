@@ -1,8 +1,7 @@
 *
-!.md
 !*/
 !.gitignore
-!.md
+!/README.md
 !.gitattributes
 !student/**/*.cpp
 !student/**/*.hh
